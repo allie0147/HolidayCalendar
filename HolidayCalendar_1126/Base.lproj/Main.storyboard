@@ -52,6 +52,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Holidays" id="t0e-tW-UgV"/>
+                    <connections>
+                        <outlet property="searchBar" destination="mvY-bF-IHP" id="OEV-pK-bab"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="49f-YW-hNC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

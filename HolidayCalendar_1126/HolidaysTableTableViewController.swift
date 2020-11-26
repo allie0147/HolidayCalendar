@@ -2,32 +2,28 @@
 //  HolidaysTableTableViewController.swift
 //  HolidayCalendar_1126
 //
-//  Created by AllieKim on 2020/11/26.
+//  Created by Allie Kim on 2020/11/26.
 //
 
 import UIKit
 
 class HolidaysTableTableViewController: UITableViewController {
 
+    @IBOutlet weak var searchBar: UISearchBar!
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.delegate = self
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return 0
     }
 
@@ -86,4 +82,10 @@ class HolidaysTableTableViewController: UITableViewController {
     }
     */
 
+
+}
+
+extension HolidaysTableTableViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    }
 }
