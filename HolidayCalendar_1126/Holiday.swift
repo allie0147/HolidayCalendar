@@ -22,7 +22,6 @@ struct HolidayDetail: Decodable {
     var date: DateInfo
 }
 
-
 struct DateInfo: Decodable {
     var iso: String
 }

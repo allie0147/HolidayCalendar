@@ -11,10 +11,19 @@ class HolidaysTableTableViewController: UITableViewController {
 
     @IBOutlet weak var searchBar: UISearchBar!
 
+    var listOfHolidays = [HolidayDetail]() {
+        // update UI
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadData() // >> overrided Table view data source functions are start
+                self.navigationItem.title = "\(self.listOfHolidays.count) Holidays found"
+            }
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-
     }
 
     // MARK: - Table view data source
@@ -24,18 +33,20 @@ class HolidaysTableTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return listOfHolidays.count
     }
 
-    /*
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
-        // Configure the cell...
-
+        let holiday =  listOfHolidays[indexPath.row]
+        cell.textLabel?.text = holiday.name
+        cell.detailTextLabel?.text = holiday.date.iso
+        
         return cell
     }
-    */
+
 
     /*
     // Override to support conditional editing of the table view.
@@ -81,11 +92,19 @@ class HolidaysTableTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
-
 }
 
 extension HolidaysTableTableViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchBarText = searchBar.text else { return }
+        let holidayRequest = HolidayRequest.init(countryCode: searchBarText)
+        holidayRequest.getHolidays { [weak self] result in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let holidays):
+                self?.listOfHolidays = holidays
+            }
+        }
     }
 }
